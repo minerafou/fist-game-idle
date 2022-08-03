@@ -32,6 +32,8 @@ class game:
         #affiche les different trucs
         self.money_display.draw_money_display(self.screen)
         self.button1.draw_button()
+        self.screen.fill((20, 20, 20))
+        pygame.display.flip
 
     def refresh(self):
         #refresh l'ecran
