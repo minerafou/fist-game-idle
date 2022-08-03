@@ -24,20 +24,22 @@ class game:
             #input de la souris
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.money_display.earn_money(self.money_click)
+                print("mouse")
+        print("check event")
 
     def update(self):
         #delete tous sur l'ecran
         self.screen.fill((255, 255, 255))
-
         #affiche les different trucs
         self.money_display.draw_money_display(self.screen)
         self.button1.draw_button()
-        self.screen.fill((20, 20, 20))
-        pygame.display.flip
+        self.screen.fill((200, 20, 20))
+        print("update")
 
     def refresh(self):
         #refresh l'ecran
         pygame.display.flip
+        print("refresh")
 
     def run(self):
         #boucle global du jeu
@@ -46,3 +48,4 @@ class game:
             self.update()
             self.refresh()
             self.clock.tick(60)
+            print("boucle")
