@@ -7,6 +7,6 @@ class money_display:
         self.textfont = pygame.font.SysFont("monospace", 50)
 
     #affiche les montant de l'argent
-    def draw_money_display(self, screen, money):
-        text_tbd = self.textfont.render("money: " + str(money), True, (0, 0, 0))
+    def draw_money_display(self, screen, money, money_ps):
+        text_tbd = self.textfont.render("money: " + str(money) + "    money per second:" + str(money_ps), True, (0, 0, 0))
         screen.blit(text_tbd, (10, 10))

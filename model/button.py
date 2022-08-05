@@ -3,10 +3,12 @@ from model.money_display import money_display
 
 
 class button:
-    def __init__(self, x, y, width, height, color, color_pos, screen, text, cost, earn, earn_ps, earn_pc):
+    #initialize la class bouton
+    def __init__(self, x, y, width, height, color, color_over, color_not_buy, screen, text, cost, earn, earn_ps, earn_pc, coef_cost):
         self.rect = pygame.Rect(x, y, width, height)
         self.color = color
-        self.color_pos = color_pos
+        self.color_over = color_over
+        self.color_not_buy = color_not_buy
         self.screen = screen
         self.text = text
         self.textfont = pygame.font.SysFont("monospace", 30)
@@ -18,20 +20,27 @@ class button:
         self.earn = earn
         self.earn_ps = earn_ps
         self.earn_pc = earn_pc
+        self.coef_cost = coef_cost
 
-    def draw_button(self):
+    def draw_button(self, money):
         #affiche le bouton
-        mouse_pos = pygame.mouse.get_pos()
+
         text = self.textfont.render(self.text , True, (0, 0, 0))
         text_rect = text.get_rect(center=(self.x + (self.width / 2), self.y + (self.height / 2)))
-        
-        if self.rect.collidepoint(mouse_pos):
-            pygame.draw.rect(self.screen, self.color, self.rect)
+
+        #check la souris et la money pour la couleur du bouton
+        mouse_pos = pygame.mouse.get_pos()
+
+        if money < self.cost:
+            pygame.draw.rect(self.screen, self.color_not_buy, self.rect)
+        elif self.rect.collidepoint(mouse_pos):
+            pygame.draw.rect(self.screen, self.color_over, self.rect)
         else:
-            pygame.draw.rect(self.screen, self.color_pos, self.rect)
+            pygame.draw.rect(self.screen, self.color, self.rect)
         self.screen.blit(text, text_rect)
 
     def button_pressed(self):
+        #return true si la souris et sur le bouton
         pos = pygame.mouse.get_pos()
         if self.rect.collidepoint(pos):
             return True
@@ -39,8 +48,25 @@ class button:
             return False
 
     def add_earn_pc(self, increase):
+        #add des money par click au action du bouton
         self.earn += increase
 
+    def add_price(self, coef_mult):
+        #augmente le price en fonction d'un coef
+        self.cost = int(round(self.cost * coef_mult, 1))
+
     def get_action(self):
-        self.action = (self.cost, self.earn, self.earn_ps, self.earn_pc)
+        #return les action de bouton
+        self.action = (self.cost, self.earn, self.earn_ps, self.earn_pc, self.coef_cost)
         return self.action
+
+    def set_text(self, index):
+        #set le text au bouton pour que sa change
+        if index == 0:
+            self.text = ("+" + str(self.earn))
+        elif index == 1:
+            self.text = ("cost:" + str(self.cost) + " +" + str(self.earn_pc) + "pc")
+        elif index == 2:
+            self.text = ("cost:" + str(self.cost) + " +" + str(self.earn_pc) + "pc")
+        elif index == 3:
+            self.text = ("cost:" + str(self.cost) + " +" + str(self.earn_ps) + "ps")
