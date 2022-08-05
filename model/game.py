@@ -17,8 +17,8 @@ class game:
         self.money = 0
         self.money_ps = 0
         self.money_pc = 1
-        self.buttons.append(button(20, 100, 60, 60, (150, 150, 150), (180, 180, 180), self.screen, "+1", 0, 1, 0, 0))
-        self.buttons.append(button(20, 200, 320, 60, (150, 150, 150), (180, 180, 180), self.screen, "cost:10 pc+0.1", 10, 0, 0, 0.1))
+        self.buttons.append(button(20, 100, 60, 60, (150, 150, 150), (180, 180, 180), self.screen, "+10", 0, 10, 0, 0))
+        self.buttons.append(button(20, 200, 320, 60, (150, 150, 150), (180, 180, 180), self.screen, "cost:100 pc+1", 100, 0, 0, 1))
 
     def check_event(self):
         #verifie les input du joueur
