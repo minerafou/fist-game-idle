@@ -1,5 +1,5 @@
 import pygame
-from model.money_display import money_display
+from model.display import display
 from model.button import button
 
 #creation de la class 'game'
@@ -11,17 +11,19 @@ class game:
         self.clock = pygame.time.Clock()
         #mise en place des variable
         self.running = True
-        self.money_display = money_display()
+        self.money_display = display(20, 10, 0)
+        self.money_ps_display = display(400, 10, 1)
         self.money = 0
         self.money_ps = 0
         self.money_pc = 1
         #creation de la liste de boutton
         self.buttons = []
         #skockage des button dans une liste
-        self.buttons.append(button(20, 100, 80, 80, (180, 180, 180), (140, 140, 140), (100, 100, 100), self.screen, "+10", 0, 10, 0, 0, 0))
-        self.buttons.append(button(20, 200, 320, 80, (180, 180, 180), (140, 140, 140), (100, 100, 100), self.screen, "cost:100 pc+1", 100, 0, 0, 1, 1.03))
-        self.buttons.append(button(20, 300, 320, 80, (180, 180, 180), (140, 140, 140), (100, 100, 100), self.screen, "cost:100 pc+1", 1000, 0, 0, 12, 1.03))
-        self.buttons.append(button(400, 200, 320, 80, (180, 180, 180), (140, 140, 140), (100, 100, 100), self.screen, "cost:100 pc+1", 50, 0, 1, 0, 1.03))
+        self.buttons.append(button(20, 100, 80, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "+10", 0, 10, 0, 0, 0, 0))
+        self.buttons.append(button(20, 200, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 150, 0, 0, 1, 1.03, 150))
+        self.buttons.append(button(20, 300, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 1000, 0, 0, 12, 1.03, 1500))
+        self.buttons.append(button(400, 200, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 100, 0, 1, 0, 1.03, 500))
+        self.lifetime = 0
     def check_event(self):
         #verifie les input du joueur
         for event in pygame.event.get():
@@ -58,13 +60,14 @@ class game:
         #delete tous sur l'ecran
         self.screen.fill((220, 220, 220))
 
-        #affiche les different trucs
-        #affachage de l'argent
-        self.money_display.draw_money_display(self.screen, self.money, self.money_ps)
+        #affachage des l'argents
+        self.money_display.draw_display(self.screen, self.money, self.money_ps)
+        self.money_ps_display.draw_display(self.screen, self.money, self.money_ps)
         
         #affichage des boutons
         for i in self.buttons:
-            i.set_text(self.buttons.index(i))
+            #set text test aussi si le bouton est unlock
+            i.set_text(self.buttons.index(i), self.lifetime)
             i.draw_button(self.money)
 
     def refresh(self):
@@ -89,6 +92,7 @@ class game:
     def earn_money(self, money_to_earn):
         #add de l'argent
         self.money += money_to_earn
+        self.lifetime += money_to_earn
 
     def buy_money(self, price):
         #enleve de l'argent
@@ -105,3 +109,4 @@ class game:
 
     def add_money_ps(self):
         self.money += self.money_ps
+        self.lifetime += self.money_ps

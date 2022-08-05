@@ -1,10 +1,9 @@
 import pygame
-from model.money_display import money_display
 
 
 class button:
     #initialize la class bouton
-    def __init__(self, x, y, width, height, color, color_over, color_not_buy, screen, text, cost, earn, earn_ps, earn_pc, coef_cost):
+    def __init__(self, x, y, width, height, color, color_over, color_not_buy, screen, text, cost, earn, earn_ps, earn_pc, coef_cost, unlock_cap):
         self.rect = pygame.Rect(x, y, width, height)
         self.color = color
         self.color_over = color_over
@@ -21,6 +20,8 @@ class button:
         self.earn_ps = earn_ps
         self.earn_pc = earn_pc
         self.coef_cost = coef_cost
+        self.unlock_cap = unlock_cap
+        self.locked = True
 
     def draw_button(self, money):
         #affiche le bouton
@@ -30,8 +31,9 @@ class button:
 
         #check la souris et la money pour la couleur du bouton
         mouse_pos = pygame.mouse.get_pos()
-
-        if money < self.cost:
+        if self.text == "locked":
+            pygame.draw.rect(self.screen, self.color_not_buy, self.rect)
+        elif money < self.cost:
             pygame.draw.rect(self.screen, self.color_not_buy, self.rect)
         elif self.rect.collidepoint(mouse_pos):
             pygame.draw.rect(self.screen, self.color_over, self.rect)
@@ -60,9 +62,11 @@ class button:
         self.action = (self.cost, self.earn, self.earn_ps, self.earn_pc, self.coef_cost)
         return self.action
 
-    def set_text(self, index):
+    def set_text(self, index, lifetime):
         #set le text au bouton pour que sa change
-        if index == 0:
+        if lifetime < self.unlock_cap:
+            self.text = ("locked")
+        elif index == 0:
             self.text = ("+" + str(self.earn))
         elif index == 1:
             self.text = ("cost:" + str(self.cost) + " +" + str(self.earn_pc) + "pc")
