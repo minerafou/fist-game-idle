@@ -29,16 +29,15 @@ class game:
 
     def update(self):
         #delete tous sur l'ecran
-        self.screen.fill((255, 255, 255))
+        self.screen.fill((30, 30, 30))
         #affiche les different trucs
         self.money_display.draw_money_display(self.screen)
         self.button1.draw_button()
-        self.screen.fill((200, 20, 20))
         print("update")
 
     def refresh(self):
         #refresh l'ecran
-        pygame.display.flip
+        pygame.display.flip()
         print("refresh")
 
     def run(self):
