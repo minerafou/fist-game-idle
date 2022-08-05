@@ -68,9 +68,7 @@ class button:
             self.text = ("locked")
         elif index == 0:
             self.text = ("+" + str(self.earn))
-        elif index == 1:
+        elif self.earn_ps == 0:
             self.text = ("cost:" + str(self.cost) + " +" + str(self.earn_pc) + "pc")
-        elif index == 2:
-            self.text = ("cost:" + str(self.cost) + " +" + str(self.earn_pc) + "pc")
-        elif index == 3:
+        elif self.earn_pc == 0:
             self.text = ("cost:" + str(self.cost) + " +" + str(self.earn_ps) + "ps")

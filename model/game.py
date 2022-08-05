@@ -19,10 +19,22 @@ class game:
         #creation de la liste de boutton
         self.buttons = []
         #skockage des button dans une liste
+
+        #button du clic
         self.buttons.append(button(20, 100, 80, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "+10", 0, 10, 0, 0, 0, 0))
+
+        #upgrade click 1
         self.buttons.append(button(20, 200, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 150, 0, 0, 1, 1.03, 150))
+        
+        #upgrade click 2
         self.buttons.append(button(20, 300, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 1000, 0, 0, 12, 1.03, 1500))
+        
+        #upgrade income 1
         self.buttons.append(button(400, 200, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 100, 0, 1, 0, 1.03, 500))
+
+        #upgrade income 1
+        self.buttons.append(button(400, 300, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 2000, 0, 25, 0, 1.03, 4000))
+        
         self.lifetime = 0
     def check_event(self):
         #verifie les input du joueur
