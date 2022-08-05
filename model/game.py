@@ -1,14 +1,20 @@
 import pygame
 from model.display import display
 from model.button import button
+from model.charge_bar import charge_bar
 
 #creation de la class 'game'
 class game:
     def __init__(self, screen):
         #recuparation de la variable screen
         self.screen = screen
+
         #mise en place de la clock
         self.clock = pygame.time.Clock()
+
+        #mise en place de la bar des seconde
+        self.charge_bar = charge_bar(400, 50, 250, 10, 1)
+
         #mise en place des variable
         self.running = True
         self.money_display = display(20, 10, 0)
@@ -16,8 +22,12 @@ class game:
         self.money = 0
         self.money_ps = 0
         self.money_pc = 1
+        self.counter_sec = 1
+        self.lifetime = 0
+
         #creation de la liste de boutton
         self.buttons = []
+
         #skockage des button dans une liste
 
         #button du clic
@@ -32,10 +42,9 @@ class game:
         #upgrade income 1
         self.buttons.append(button(400, 200, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 100, 0, 1, 0, 1.03, 500))
 
-        #upgrade income 1
+        #upgrade income 2
         self.buttons.append(button(400, 300, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), self.screen, "cost:100 pc+1", 2000, 0, 25, 0, 1.03, 4000))
         
-        self.lifetime = 0
     def check_event(self):
         #verifie les input du joueur
         for event in pygame.event.get():
@@ -44,7 +53,7 @@ class game:
                 self.running = False
 
             if event.type == pygame.USEREVENT:
-                self.add_money_ps()
+                self.every_milsec_action()
             
             #input de la souris
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -76,6 +85,9 @@ class game:
         self.money_display.draw_display(self.screen, self.money, self.money_ps)
         self.money_ps_display.draw_display(self.screen, self.money, self.money_ps)
         
+        #affiche la bar
+        self.charge_bar.draw_bar()
+
         #affichage des boutons
         for i in self.buttons:
             #set text test aussi si le bouton est unlock
@@ -122,3 +134,13 @@ class game:
     def add_money_ps(self):
         self.money += self.money_ps
         self.lifetime += self.money_ps
+
+    def every_milsec_action(self):
+        #informa charge bar que 10ms ce sont ecouler
+        self.charge_bar.update()
+
+        #add la money toute les sec
+        self.counter_sec += 1
+        if self.counter_sec == 100:
+            self.counter_sec = 0
+            self.add_money_ps()

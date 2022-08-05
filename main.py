@@ -5,7 +5,7 @@ from model.game import game
 pygame.init()
 
 #start un event toute les 1 sec
-pygame.time.set_timer(pygame.USEREVENT, 1000)
+pygame.time.set_timer(pygame.USEREVENT, 10)
 
 #set la fenetre
 screen = pygame.display.set_mode((1200, 800))
