@@ -13,7 +13,7 @@ class game:
         self.running = True
         self.money_display = money_display()
         self.money_click = 1
-        self.button1 = button(60, 60, 60, 60, (0, 255, 0), self.screen)
+        self.button1 = button(20, 100, 60, 60, (100, 100, 100), self.screen)
 
     def check_event(self):
         #verifie les input du joueur
@@ -29,7 +29,7 @@ class game:
 
     def update(self):
         #delete tous sur l'ecran
-        self.screen.fill((30, 30, 30))
+        self.screen.fill((220, 220, 220))
         #affiche les different trucs
         self.money_display.draw_money_display(self.screen)
         self.button1.draw_button()
