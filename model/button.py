@@ -1,5 +1,6 @@
-from turtle import back
+from cgitb import text
 import pygame
+from model.additional_fonc import *
 
 
 class button:
@@ -12,7 +13,7 @@ class button:
         self.color_not_buy = color_not_buy
         self.screen = screen
         self.text = text
-        self.textfont = pygame.font.SysFont("monospace", 15)
+        self.textfont_15px = pygame.font.SysFont("monospace", 15)
         self.width = width
         self.height = height
         self.x = x
@@ -25,13 +26,14 @@ class button:
         self.unlock_cap = unlock_cap
         self.special_id = special_id
         self.locked = True
-        self.cap_bonus = [10, 25, 50, 75, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000, 100000000]
+        self.cap_bonus = [10, 25, 50, 75, 100, 150, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000, 1250, 1500, 1750, 2000, 1000000000]
+        self.mult_bonus = [2, 2 , 2,  2,  5,   3,   3,   5,   5,   5,   5,   8,   8,   8,   8,   15,   15,   15,   25,   100,  0]
         self.level = 0
 
     def draw_button(self, money):
         #affiche le bouton
 
-        text = self.textfont.render(self.text , True, (0, 0, 0))
+        text = self.textfont_15px.render(self.text , True, (0, 0, 0))
         text_rect = text.get_rect(center=(self.x + (self.width / 2), self.y + (self.height / 2)))
 
         #check la souris et la money pour la couleur du bouton
@@ -76,16 +78,16 @@ class button:
             self.text = ("Locked")
         
         elif index == 0:
-            self.text = ("+" + str(self.adapt_money(money_pc)))
+            self.text = ("+" + str(adapt_money(money_pc)))
         elif index == 1:
             self.text = ("Exit")
         
         elif self.earn_ps == 0:
             text_earn = self.earn_text(self.earn_pc)
-            self.text = ("Cost:" + str(self.adapt_money(self.cost)) + " +" + str(self.adapt_money(text_earn)) + " per click")
+            self.text = ("Cost:" + str(adapt_money(self.cost)) + " +" + str(text_earn) + " per click")
         elif self.earn_pc == 0:
             text_earn = self.earn_text(self.earn_ps)
-            self.text = ("Cost:" + str(self.adapt_money(self.cost)) + " +" + str(self.adapt_money(text_earn)) + " per second")
+            self.text = ("Cost:" + str(adapt_money(self.cost)) + " +" + str(text_earn) + " per second")
 
     def add_level(self, up_level):
         self.level += up_level
@@ -94,14 +96,14 @@ class button:
         boost_mult_cap = 1
         for i in self.cap_bonus:
             if self.level >= i:
-                boost_mult_cap *= 2
+                boost_mult_cap *= self.mult_bonus[self.cap_bonus.index(i)]
         return self.earn_pc * self.level * boost_mult_cap
     
     def get_money_ps_boost(self):
         boost_mult_cap = 1
         for i in self.cap_bonus:
             if self.level >= i:
-                boost_mult_cap *= 2
+                boost_mult_cap *= self.mult_bonus[self.cap_bonus.index(i)]
         return self.earn_ps * self.level * boost_mult_cap
     
     def is_locked(self, lifetime):
@@ -109,22 +111,6 @@ class button:
             return True
         else:
             return False
-    
-    #ajoute K, M, B, AA, AB, AC etc...
-    def adapt_money(self, money_before):
-        if money_before >= 1000000000:
-            money_divide = round(money_before / 1000000000, 2)
-            money_after = (str(money_divide) + " B")
-        elif money_before >= 1000000:
-            money_divide = round(money_before / 1000000, 2)
-            money_after = (str(money_divide) + " M")
-        elif money_before >= 1000:
-            money_divide = round(money_before / 1000, 2)
-            money_after = (str(money_divide) + " K")
-        else:
-            return money_before
-        return money_after
-
 
     def check_next_cap(self):
         for i in self.cap_bonus:
@@ -149,10 +135,20 @@ class button:
         pygame.draw.rect(self.screen, color_background, background_rect)
         pygame.draw.rect(self.screen, color_progress, progress_rect)
 
+        text_tbd = self.textfont_15px.render("Lvl: " + str(self.level) , True, (0, 0, 0))
+
+        self.screen.blit(text_tbd, (self.x + 5, self.y + self.height + 1))
+
+        text = "x" + str(self.mult_bonus[self.cap_bonus.index(self.check_next_cap())])
+        text_tbd = self.textfont_15px.render(text, True, (0, 0, 0))
+        text_width = text_tbd.get_width()
+
+        self.screen.blit(text_tbd, (self.x + self.width - text_width, self.y + self.height + 1))
+
     def earn_text(self, text):
         boost_mult_cap = 1
         for i in self.cap_bonus:
             if self.level >= i:
-                boost_mult_cap *= 2
+                boost_mult_cap *= self.mult_bonus[self.cap_bonus.index(i)]
         text *= boost_mult_cap
-        return self.adapt_money(text)
+        return adapt_money(text)

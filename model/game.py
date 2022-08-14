@@ -42,35 +42,43 @@ class game:
 
         #upgrade click 1
         self.buttons.append(button(20, 200, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 100, 0, 0, 1, 1.09, 100, "none"))
+        self.screen, "cost:100 pc+1", 100, 0, 0, 1, 1.0, 100, "none"))
         
         #upgrade click 2
         self.buttons.append(button(20, 300, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 1000, 0, 0, 12, 1.09, 5000, "none"))
+        self.screen, "cost:100 pc+1", 1000, 0, 0, 12, 1.07, 5000, "none"))
 
         #upgrade click 3
         self.buttons.append(button(20, 400, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 7500, 0, 0, 95, 1.09, 35000, "none"))
+        self.screen, "cost:100 pc+1", 7500, 0, 0, 95, 1.07, 35000, "none"))
 
         #upgrade click 4
         self.buttons.append(button(20, 500, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 35000, 0, 0, 150, 1.09, 100000, "none"))
+        self.screen, "cost:100 pc+1", 35000, 0, 0, 150, 1.07, 100000, "none"))
+
+        #upgrade click 5
+        self.buttons.append(button(20, 600, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 100000, 0, 0, 550, 1.07, 400000, "none"))
         
         #upgrade income 1
         self.buttons.append(button(400, 200, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 100, 0, 1, 0, 1.09, 500, "none"))
+        self.screen, "cost:100 pc+1", 100, 0, 1, 0, 1.07, 500, "none"))
 
         #upgrade income 2
         self.buttons.append(button(400, 300, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 2500, 0, 35, 0, 1.09, 10000, "none"))
+        self.screen, "cost:100 pc+1", 2500, 0, 35, 0, 1.07, 10000, "none"))
 
         #upgrade income 3
         self.buttons.append(button(400, 400, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 10000, 0, 140, 0, 1.09, 90000, "none"))
+        self.screen, "cost:100 pc+1", 10000, 0, 140, 0, 1.07, 90000, "none"))
 
         #upgrade income 4
         self.buttons.append(button(400, 500, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 50000, 0, 300, 0, 1.09, 250000, "none"))
+        self.screen, "cost:100 pc+1", 50000, 0, 300, 0, 1.07, 250000, "none"))
+
+        #upgrade income 5
+        self.buttons.append(button(400, 600, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 130000, 0, 1100, 0, 1.07, 850000, "none"))
         
     def check_event(self):
         #verifie les input du joueur
@@ -98,6 +106,7 @@ class game:
         
         #affiche la bar
         self.charge_bar.draw_bar(self.screen)
+
         #affichage des boutons
         for i in self.buttons:
             #set text test aussi si le bouton est unlock
