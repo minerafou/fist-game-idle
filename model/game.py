@@ -17,21 +17,13 @@ class game:
         #mise en place de la bar des seconde
         self.charge_bar = charge_bar(400, 50, 375, 10, 1, (170, 170, 170), (100, 100, 100))
 
-        self.charge_bar1 = charge_bar(400, 70, 375, 10, 2, (170, 170, 170), (100, 100, 100))
-
-        self.charge_bar2 = charge_bar(400, 90, 375, 10, 4, (170, 170, 170), (100, 100, 100))
-
-        self.charge_bar3 = charge_bar(400, 110, 375, 10, 8, (170, 170, 170), (100, 100, 100))
-
-        self.charge_bar4 = charge_bar(400, 130, 375, 10, 16, (170, 170, 170), (100, 100, 100))
-
         #mise en place des variable
         self.running = True
         self.money_display = display(20, 10, 0)
         self.money_ps_display = display(400, 10, 1)
         self.money = 0
         self.money_ps = 0
-        self.money_pc = 1
+        self.money_pc = 10
         self.counter_sec = 1
         self.lifetime = 0
 
@@ -42,35 +34,43 @@ class game:
 
         #button du clic
         self.buttons.append(button(20, 100, 80, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "+10", 0, 10, 0, 0, 0, 0))
+        self.screen, "+10", 0, 10, 0, 0, 0, 0, "click"))
 
         #button exit
         self.buttons.append(button(self.screen_width-120, 0, 120, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100),
-        self.screen, "+10", 0, 0, 0, 0, 123456789, 0))
+        self.screen, "+10", 0, 0, 0, 0, 0, 0, "exit"))
 
         #upgrade click 1
-        self.buttons.append(button(20, 200, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 150, 0, 0, 1, 1.05, 150))
+        self.buttons.append(button(20, 200, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 100, 0, 0, 1, 1.09, 100, "none"))
         
         #upgrade click 2
-        self.buttons.append(button(20, 300, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 1000, 0, 0, 12, 1.05, 1500))
+        self.buttons.append(button(20, 300, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 1000, 0, 0, 12, 1.09, 5000, "none"))
 
         #upgrade click 3
-        self.buttons.append(button(20, 400, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 5000, 0, 0, 75, 1.05, 7500))
+        self.buttons.append(button(20, 400, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 7500, 0, 0, 95, 1.09, 35000, "none"))
+
+        #upgrade click 4
+        self.buttons.append(button(20, 500, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 35000, 0, 0, 150, 1.09, 100000, "none"))
         
         #upgrade income 1
-        self.buttons.append(button(400, 200, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 100, 0, 1, 0, 1.05, 500))
+        self.buttons.append(button(400, 200, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 100, 0, 1, 0, 1.09, 500, "none"))
 
         #upgrade income 2
-        self.buttons.append(button(400, 300, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 2000, 0, 25, 0, 1.05, 4000))
+        self.buttons.append(button(400, 300, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 2500, 0, 35, 0, 1.09, 10000, "none"))
 
         #upgrade income 3
-        self.buttons.append(button(400, 400, 320, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 7500, 0, 120, 0, 1.05, 15000))
+        self.buttons.append(button(400, 400, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 10000, 0, 140, 0, 1.09, 90000, "none"))
+
+        #upgrade income 4
+        self.buttons.append(button(400, 500, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.screen, "cost:100 pc+1", 50000, 0, 300, 0, 1.09, 250000, "none"))
         
     def check_event(self):
         #verifie les input du joueur
@@ -86,26 +86,7 @@ class game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 
                 #check des buttons
-                for i in self.buttons:
-                    if i.button_pressed():
-
-                        #recupation des action du bouton
-                        cost, money_to_earn, increase_money_ps, increase_money_pc, coef_cost = i.get_action()
-
-                        #check exit button
-                        if coef_cost == 123456789:
-                            print("rezfs")
-                            self.running = False
-
-                        #check de l'argent
-                        elif self.check_for_money(cost):
-
-                            #fait les action du bouton
-                            self.earn_money(money_to_earn)
-                            self.buy_money(cost)
-                            self.increase_money_ps(increase_money_ps)
-                            self.increase_money_pc(increase_money_pc)
-                            i.add_price(coef_cost)
+                self.check_button()
 
     def update(self):
         #delete tous sur l'ecran
@@ -117,15 +98,10 @@ class game:
         
         #affiche la bar
         self.charge_bar.draw_bar(self.screen)
-        self.charge_bar1.draw_bar(self.screen)
-        self.charge_bar2.draw_bar(self.screen)
-        self.charge_bar3.draw_bar(self.screen)
-        self.charge_bar4.draw_bar(self.screen)
-
         #affichage des boutons
         for i in self.buttons:
             #set text test aussi si le bouton est unlock
-            i.set_text(self.buttons.index(i), self.lifetime)
+            i.set_text(self.buttons.index(i), self.lifetime, self.money_pc)
             i.draw_button(self.money)
 
     def refresh(self):
@@ -154,15 +130,6 @@ class game:
     def buy_money(self, price):
         #enleve de l'argent
         self.money -= price
-    
-    def increase_money_ps(self, increase):
-        #add de la money par seconde
-        self.money_ps += increase
-    
-    def increase_money_pc(self, increase):
-        #add de la money par click
-        self.buttons[0].add_earn_pc(increase)
-        self.money_pc += increase
 
     def add_money_ps(self):
         self.earn_money(self.money_ps)
@@ -170,13 +137,40 @@ class game:
     def every_milsec_action(self):
         #informa charge bar que 10ms ce sont ecouler
         self.charge_bar.update()
-        self.charge_bar1.update()
-        self.charge_bar2.update()
-        self.charge_bar3.update()
-        self.charge_bar4.update()
 
         #add la money toute les sec
         self.counter_sec += 1
         if self.counter_sec == 100:
             self.counter_sec = 0
             self.add_money_ps()
+
+    def check_button(self):
+        for i in self.buttons:
+            if i.button_pressed() and not i.is_locked(self.lifetime):
+
+                #recupation des action du bouton
+                cost, coef_cost, special_id = i.get_action()
+
+                #check click button
+                if special_id == "click":
+                    self.earn_money(self.money_pc)            
+                
+                #check exit button
+                elif special_id == "exit":
+                    self.running = False
+
+                #check de l'argent
+                elif self.check_for_money(cost):
+
+                    #fait les action du bouton
+                    i.add_level(1)
+                    self.check_money_pc_ps()
+                    self.buy_money(cost)
+                    i.add_price(coef_cost)
+
+    def check_money_pc_ps(self):
+        self.money_ps = 0
+        self.money_pc = 10
+        for i in self.buttons:
+            self.money_pc += i.get_money_pc_boost()
+            self.money_ps += i.get_money_ps_boost()
