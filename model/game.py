@@ -42,7 +42,7 @@ class game:
 
         #upgrade click 1
         self.buttons.append(button(20, 200, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 100, 0, 0, 1, 1.0, 100, "none"))
+        self.screen, "cost:100 pc+1", 100, 0, 0, 1, 1.07, 100, "none"))
         
         #upgrade click 2
         self.buttons.append(button(20, 300, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
