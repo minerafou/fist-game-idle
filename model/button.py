@@ -3,7 +3,7 @@ import pygame
 from model.additional_fonc import *
 
 
-class Button:
+class button:
     #initialize la class bouton
     def __init__(self, x, y, width, height, color, color_over, color_not_buy, screen, text, cost, earn, earn_ps, earn_pc, coef_cost,
     unlock_cap, special_id):

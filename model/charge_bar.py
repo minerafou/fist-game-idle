@@ -1,6 +1,6 @@
 import pygame
 
-class ChargeBar:
+class charge_bar:
     def __init__(self, x, y, width, height, speed, color_background, color_progress):
         self.x = x
         self.y = y
