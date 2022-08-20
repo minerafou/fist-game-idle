@@ -3,7 +3,7 @@ import pygame
 from model.additional_fonc import *
 
 
-class button:
+class Button:
     #initialize la class bouton
     def __init__(self, x, y, width, height, color, color_over, color_not_buy, screen, text, cost, earn, earn_ps, earn_pc, coef_cost,
     unlock_cap, special_id):
@@ -78,16 +78,16 @@ class button:
             self.text = ("Locked")
         
         elif index == 0:
-            self.text = ("+" + str(adapt_money(money_pc)))
+            self.text = ("+" + str(AdaptMoney(money_pc)))
         elif index == 1:
             self.text = ("Exit")
         
         elif self.earn_ps == 0:
             text_earn = self.earn_text(self.earn_pc)
-            self.text = ("Cost:" + str(adapt_money(self.cost)) + " +" + str(text_earn) + " per click")
+            self.text = ("Cost:" + str(AdaptMoney(self.cost)) + " +" + str(text_earn) + " per click")
         elif self.earn_pc == 0:
             text_earn = self.earn_text(self.earn_ps)
-            self.text = ("Cost:" + str(adapt_money(self.cost)) + " +" + str(text_earn) + " per second")
+            self.text = ("Cost:" + str(AdaptMoney(self.cost)) + " +" + str(text_earn) + " per second")
 
     def add_level(self, up_level):
         self.level += up_level
@@ -151,4 +151,4 @@ class button:
             if self.level >= i:
                 boost_mult_cap *= self.mult_bonus[self.cap_bonus.index(i)]
         text *= boost_mult_cap
-        return adapt_money(text)
+        return AdaptMoney(text)

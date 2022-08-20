@@ -1,7 +1,7 @@
 import pygame
-from model.display import display
-from model.button import button
-from model.charge_bar import charge_bar
+from model.display import Display
+from model.button import Button
+from model.charge_bar import ChargeBar
 
 #creation de la class 'game'
 class game:
@@ -15,12 +15,12 @@ class game:
         self.clock = pygame.time.Clock()
 
         #mise en place de la bar des seconde
-        self.charge_bar = charge_bar(400, 50, 375, 10, 1, (170, 170, 170), (100, 100, 100))
+        self.charge_bar = ChargeBar(400, 50, 375, 10, 1, (170, 170, 170), (100, 100, 100))
 
         #mise en place des variable
         self.running = True
-        self.money_display = display(20, 10, 0)
-        self.money_ps_display = display(400, 10, 1)
+        self.money_display = Display(20, 10, 0)
+        self.money_ps_display = Display(400, 10, 1)
         self.money = 0
         self.money_ps = 0
         self.money_pc = 10
@@ -33,53 +33,35 @@ class game:
         #skockage des button dans une liste
 
         #button du clic
-        self.buttons.append(button(20, 100, 80, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+        self.buttons.append(Button(20, 100, 80, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
         self.screen, "+10", 0, 10, 0, 0, 0, 0, "click"))
 
         #button exit
-        self.buttons.append(button(self.screen_width-120, 0, 120, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100),
+        self.buttons.append(Button(self.screen_width-120, 0, 120, 80, (180, 180, 180), (150, 150, 150), (100, 100, 100),
         self.screen, "+10", 0, 0, 0, 0, 0, 0, "exit"))
 
-        #upgrade click 1
-        self.buttons.append(button(20, 200, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 100, 0, 0, 1, 1.07, 100, "none"))
+        for i in range(5):                                      #*Money by click buttons
+            y_coords = 200 + i*100                              # y coord of the button   
+             
+            cost_factor = 1.07                                  # factor between the cost of an upgrade 'n' and 'n+1'              
+            base_cost = [100, 1000, 7500, 35000, 100000]        # cost of the lvl 1 upgrade
+            money_click = [1, 12, 65, 150, 550]                 # number of "money by click" added
+            money_needed = [100, 5000, 35000, 100000, 400000]   # quantity of money nedded to unlock this level of upgrade /!\ total amount of money /!\
+
+            self.buttons.append(Button(20, y_coords, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+            self.screen, "cost:100 pc+1", base_cost[i], 0, 0, money_click[i], cost_factor, money_needed[i], "none"))
         
-        #upgrade click 2
-        self.buttons.append(button(20, 300, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 1000, 0, 0, 12, 1.07, 5000, "none"))
-
-        #upgrade click 3
-        self.buttons.append(button(20, 400, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 7500, 0, 0, 95, 1.07, 35000, "none"))
-
-        #upgrade click 4
-        self.buttons.append(button(20, 500, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 35000, 0, 0, 150, 1.07, 100000, "none"))
-
-        #upgrade click 5
-        self.buttons.append(button(20, 600, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 100000, 0, 0, 550, 1.07, 400000, "none"))
-        
-        #upgrade income 1
-        self.buttons.append(button(400, 200, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 100, 0, 1, 0, 1.07, 500, "none"))
-
-        #upgrade income 2
-        self.buttons.append(button(400, 300, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 2500, 0, 35, 0, 1.07, 10000, "none"))
-
-        #upgrade income 3
-        self.buttons.append(button(400, 400, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 10000, 0, 140, 0, 1.07, 90000, "none"))
-
-        #upgrade income 4
-        self.buttons.append(button(400, 500, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 50000, 0, 300, 0, 1.07, 250000, "none"))
-
-        #upgrade income 5
-        self.buttons.append(button(400, 600, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
-        self.screen, "cost:100 pc+1", 130000, 0, 1100, 0, 1.07, 850000, "none"))
-        
+        for i in range(5):                                      #*Money by second buttons
+            y_coords = 200 + i*100                              # y coord of the button       
+            
+            cost_factor = 1.07                                  # factor between the cost of an upgrade 'n' and 'n+1'
+            base_cost = [100, 2500, 10000, 50000, 130000]       # cost of the lvl 1 upgrade
+            money_second = [1, 34, 140, 300, 1100]              # number of "money by second" added
+            money_needed = [500, 10000, 90000, 250000, 850000]   # quantity of money nedded to unlock this level of upgrade /!\ total amount of money /!\
+            
+            self.buttons.append(Button(400, y_coords, 320, 60, (180, 180, 180), (150, 150, 150), (100, 100, 100), 
+            self.screen, "cost:100 pc+1", base_cost[i], 0, money_second[i], 0,  cost_factor, money_needed[i], "none"))
+   
     def check_event(self):
         #verifie les input du joueur
         for event in pygame.event.get():
