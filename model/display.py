@@ -2,7 +2,7 @@ import pygame
 from model.additional_fonc import *
 
 
-class Display:
+class display:
     def __init__(self, x, y, id):
         #mise en place de la fonte de text
         self.textfont = pygame.font.SysFont("monospace", 35)
