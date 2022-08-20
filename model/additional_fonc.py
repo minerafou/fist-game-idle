@@ -1,5 +1,5 @@
 #ajoute K, M, B, AA, AB, AC etc...
-def adapt_money(money_before):
+def AdaptMoney(money_before):
     if money_before >= 10**18:
         money_divide = round(money_before / 10**18, 2)
         money_after = (str(money_divide) + " AC")
